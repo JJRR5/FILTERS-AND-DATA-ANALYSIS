@@ -42,14 +42,15 @@ def select():
 		entryfs.grid(row=2,column=2,padx=10,pady=10)
 		entryfs.config(justify="right")
 
-		if tipo==1 or tipo==2:
+		if tipo==0 or tipo==1:
 			labelfc=Label(frame2,text="Frecuencia de corte:")
 			labelfc.grid(row=3,column=1)
 
 			entryfc=Entry(frame2,textvariable=fc)
 			entryfc.grid(row=3,column=2,padx=10,pady=10)
 			entryfc.config(justify="right")
-		else:
+		
+		elif tipo==2 or tipo==3:
 			labelfc1=Label(frame2,text="Frecuencia de corte inferior:")
 			labelfc1.grid(row=3,column=1)
 
@@ -64,6 +65,37 @@ def select():
 			entryfc2.grid(row=4,column=2,padx=10,pady=10)
 			entryfc2.config(justify="right")
 		
+		if filtro==1:
+			labelrp=Label(frame2,text="Rizo en la región de pasa banda:")
+			labelrp.grid(row=5,column=1)
+
+			entryrp=Entry(frame2,textvariable=fc1)
+			entryrp.grid(row=5,column=2,padx=10,pady=10)
+			entryrp.config(justify="right")
+
+		elif filtro==2:
+			labelrs=Label(frame2,text="Rizo en la región de rechaso:")
+			labelrs.grid(row=6,column=1)
+
+			entryrs=Entry(frame2,textvariable=fc1)
+			entryrs.grid(row=6,column=2,padx=10,pady=10)
+			entryrs.config(justify="right")
+
+		elif filtro==3:
+			labelrp=Label(frame2,text="Rizo en la región de pasa banda:")
+			labelrp.grid(row=5,column=1)
+
+			entryrp=Entry(frame2,textvariable=fc1)
+			entryrp.grid(row=5,column=2,padx=10,pady=10)
+			entryrp.config(justify="right")
+
+			labelrs=Label(frame2,text="Rizo en la región de rechaso:")
+			labelrs.grid(row=6,column=1)
+
+			entryrs=Entry(frame2,textvariable=fc1)
+			entryrs.grid(row=6,column=2,padx=10,pady=10)
+			entryrs.config(justify="right")
+			
 		ventana2.mainloop()
 	else:
 		messagebox.showerror(message="Debes seleccionar un filtro y un tipo",title="Error")
