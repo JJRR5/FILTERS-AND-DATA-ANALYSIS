@@ -14,13 +14,20 @@ frame.pack()
 #Segunda ventana
 
 def select():
-	filtro=menu1.current()
-	tipo=menu2.current()
-	
+	filtro=menu1.current() #dato acutal elegido
+	tipo=menu2.current() #dato actual elegido x2	
 	if filtro>=0 and tipo>=0:
 		ventana2=Tk()
-		ventana2.title("Proyecto: Generación de filtros digitales")
-		
+		#logica para titulo de ventana2/////////
+		if filtro == 0:
+			ventana2.title("Filtro Butterworth")
+		elif filtro ==1:
+			ventana2.title("Filtro Chevyshev Tipo I")
+		elif filtro ==2:
+			ventana2.title("Filtro Chevyshev Tipo II")
+		elif filtro == 3:
+			ventana2.title("Filtro Elíptico")
+		#/////////////////////////////////////////
 		frame2=Frame(ventana2)
 		frame2.pack()
 
@@ -134,5 +141,6 @@ menu2["values"]=opciones2
 
 botonselect=Button(frame,text="Seleccionar",width=10,command=select)
 botonselect.grid(row=3,column=2,padx=10,pady=10)
+
 
 ventana.mainloop()
