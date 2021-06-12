@@ -25,6 +25,17 @@ def select():
 		def salir():
 			ventana.destroy()
 			ventana2.destroy()
+		#LIMPIAR()//////////////////
+		def limpiar():
+			entryN.delete(0,END)
+			entryfs.delete(0,END)
+			entryfc.delete(0,END)
+			entryfc1.delete(0,END)
+			entryfc2.delete(0,END)
+			entryrp.delete(0,END)
+			entryrs.delete(0,END)
+		#EVALUAR()////////////////
+		
 		#logica para titulo de ventana2/////////
 		if filtro == 0:
 			ventana2.title("Filtro Butterworth")
@@ -38,13 +49,13 @@ def select():
 		#BOTONES VENTANA 2 
 		#MOSTRAR RESPUESTA 
 		mostrar=Button(frame2,text="EAVALUAR",width=10,command=select) #esta funcion aun no se crea
-		mostrar.grid(row=6,column=1,padx=10,pady=10)
+		mostrar.grid(row=7,column=1,padx=10,pady=10)
 		#LIMPIAR ENTRADAS
-		limpiar=Button(frame2,text="BORRAR",width=10,command=select) #esta funcion aun no se crea
-		limpiar.grid(row=6,column=2,padx=10,pady=10)
+		limpiar=Button(frame2,text="BORRAR",width=10,command=limpiar) #esta funcion aun no se crea
+		limpiar.grid(row=7,column=2,padx=10,pady=10)
 		# SALIR DEL DISEÑO 
-		salir=Button(frame2,text="SALIR",width=10,command=salir) #esta funcion aun no se crea
-		salir.grid(row=6,column=3,padx=10,pady=10)
+		salir=Button(frame2,text="SALIR",width=10,command=salir)
+		salir.grid(row=7,column=3,padx=10,pady=10)
 	#////////////////////////////////////////////////////////
 		N=IntVar()
 		fs=DoubleVar()
@@ -60,14 +71,14 @@ def select():
 		labelN.grid(row=1,column=1)
 
 		entryN=Entry(frame2,textvariable=N)
-		entryN.grid(row=1,column=2,padx=10,pady=10)
+		entryN.grid(row=1,column=2,padx=10,pady=10) #entry
 		entryN.config(justify="right")
 
 		labelfs=Label(frame2,text="Frecuencia de muestreo:")
 		labelfs.grid(row=2,column=1)
 
 		entryfs=Entry(frame2,textvariable=fs)
-		entryfs.grid(row=2,column=2,padx=10,pady=10)
+		entryfs.grid(row=2,column=2,padx=10,pady=10) #entry 
 		entryfs.config(justify="right")
 
 		#Frecuencia de corte para pasa bajas y pasa altas
