@@ -18,6 +18,13 @@ def select():
 	tipo=menu2.current() #dato actual elegido x2	
 	if filtro>=0 and tipo>=0:
 		ventana2=Tk()
+		frame2=Frame(ventana2)
+		frame2.pack()
+		#////////////FUNCIONES/////////////////////////////
+		#SALIR()///////////////////
+		def salir():
+			ventana.destroy()
+			ventana2.destroy()
 		#logica para titulo de ventana2/////////
 		if filtro == 0:
 			ventana2.title("Filtro Butterworth")
@@ -28,9 +35,17 @@ def select():
 		elif filtro == 3:
 			ventana2.title("Filtro Elíptico")
 		#/////////////////////////////////////////
-		frame2=Frame(ventana2)
-		frame2.pack()
-
+		#BOTONES VENTANA 2 
+		#MOSTRAR RESPUESTA 
+		mostrar=Button(frame2,text="EAVALUAR",width=10,command=select) #esta funcion aun no se crea
+		mostrar.grid(row=6,column=1,padx=10,pady=10)
+		#LIMPIAR ENTRADAS
+		limpiar=Button(frame2,text="BORRAR",width=10,command=select) #esta funcion aun no se crea
+		limpiar.grid(row=6,column=2,padx=10,pady=10)
+		# SALIR DEL DISEÑO 
+		salir=Button(frame2,text="SALIR",width=10,command=salir) #esta funcion aun no se crea
+		salir.grid(row=6,column=3,padx=10,pady=10)
+	#////////////////////////////////////////////////////////
 		N=IntVar()
 		fs=DoubleVar()
 		fc=DoubleVar()
