@@ -20,16 +20,6 @@ def select():
 		ventana2=Tk()
 		frame2=Frame(ventana2)
 		frame2.pack()
-
-		n=IntVar()
-		fs=DoubleVar()
-		fc=DoubleVar()
-		fc1=DoubleVar()
-		fc2=DoubleVar()
-		rp=DoubleVar()
-		rs=DoubleVar()
-		n.set(5)
-
 		#////////////FUNCIONES/////////////////////////////
 		#SALIR()///////////////////
 		def salir():
@@ -45,36 +35,66 @@ def select():
 			entryrp.delete(0,END)
 			entryrs.delete(0,END)
 
-		def evaluar(filtro,tipo):			
-			Fs=fs.get()/2
-
+		def evaluar(filtro,tipo):
+			n=int(entryN.get())
+			fs=int(entryfs.get())
+			#Logica para las variables 
+			if filtro == 0 and tipo ==0 or tipo == 1: 
+				fc=int(entryfc.get())
+			elif filtro == 0 and tipo ==2 or tipo ==3: 
+				fc1=int(entryfc1.get())
+				fc2=int(entryfc2.get())
+			elif filtro ==  1 and tipo==2 or tipo ==3:
+				fc1=int(entryfc1.get())
+				fc2=int(entryfc2.get())
+				rp=int(entryrp.get())
+			elif filtro == 1 and tipo ==0 or tipo ==1: 
+				fc=int(entryfc.get())
+				rp=int(entryrp.get())
+			elif filtro == 2 and tipo ==0 or tipo == 1: 
+				fc=int(entryfc.get())
+				rs=int(entryrs.get())
+			elif filtro ==  2 and tipo==2 or tipo ==3:
+				fc1=int(entryfc1.get())
+				fc2=int(entryfc2.get())
+				rs=int(entryrp.get())
+			elif filtro == 3 and tipo ==0 or tipo == 1: 
+				fc=int(entryfc.get())
+				rp=int(entryrp.get())
+				rs=int(entryrp.get())
+			elif filtro == 3 and tipo ==2 or tipo == 3: 
+				fc1=int(entryfc1.get())
+				fc2=int(entryfc2.get())
+				rp=int(entryrp.get())
+				rs=int(entryrp.get())
+			Fs=fs/2
 			if tipo==0:
 				btype="lowpass"
-				w=fc.get()/Fs
+				w=fc/Fs
 			elif tipo==1:
 				btype="highpass"
-				w=fc.get()/Fs
+				w=fc/Fs
 			elif tipo==2:
 				btype="bandpass"
-				w=[fc1.get()/Fs,fc2.get()/Fs]
+				w=[fc1/Fs,fc2/Fs]
 			elif tipo==3:
 				btype="bandstop"
-				w=[fc1.get()/Fs,fc2.get()/Fs]
+				w=[fc1/Fs,fc2/Fs]
 			
 			if filtro==0:
-				b,a=signal.butter(n.get(),w,btype)
+				b,a=signal.butter(n,w,btype)
 				w,h=signal.freqz(b,a)
 				plt.title('Butterworth filter frequency response')
 			elif filtro==1:
-				b,a=signal.butter(n.get(),rp.get(),w,btype)
+				b,a=signal.butter(n,rp,w,btype)
 				w,h=signal.freqz(b,a)
 				plt.title('Chevyshev I filter frequency response')
 			elif filtro==2:
-				b,a=signal.butter(n.get(),rs.get(),w,btype)
+				b,a=signal.butter(n,rs,w,btype)
 				w,h=signal.freqz(b,a)
 				plt.title('Chevyshev II filter frequency response')
 			elif filtro==3:
-				b,a=signal.butter(n.get(),rp.get(),rs.get(),w,btype)
+				b,a=signal.butter(n,rp,rs,w,btype)
 				w,h=signal.freqz(b,a)
 				plt.title('Elliptic filter frequency response')
 
@@ -104,14 +124,14 @@ def select():
 		labelN=Label(frame2,text="Orden del filtro:")
 		labelN.grid(row=1,column=1)
 
-		entryN=Entry(frame2,textvariable=n)
+		entryN=Entry(frame2)
 		entryN.grid(row=1,column=2,padx=10,pady=10) #entry
 		entryN.config(justify="right")
 
 		labelfs=Label(frame2,text="Frecuencia de muestreo:")
 		labelfs.grid(row=2,column=1)
 
-		entryfs=Entry(frame2,textvariable=fs)
+		entryfs=Entry(frame2)
 		entryfs.grid(row=2,column=2,padx=10,pady=10) #entry 
 		entryfs.config(justify="right")
 
@@ -121,7 +141,7 @@ def select():
 			labelfc=Label(frame2,text="Frecuencia de corte:")
 			labelfc.grid(row=3,column=1)
 
-			entryfc=Entry(frame2,textvariable=fc)
+			entryfc=Entry(frame2)
 			entryfc.grid(row=3,column=2,padx=10,pady=10)
 			entryfc.config(justify="right")
 
@@ -131,14 +151,14 @@ def select():
 			labelfc1=Label(frame2,text="Frecuencia de corte inferior:")
 			labelfc1.grid(row=3,column=1)
 
-			entryfc1=Entry(frame2,textvariable=fc1)
+			entryfc1=Entry(frame2)
 			entryfc1.grid(row=3,column=2,padx=10,pady=10)
 			entryfc1.config(justify="right")
 
 			labelfc2=Label(frame2,text="Frecuencia de corte superior:")
 			labelfc2.grid(row=4,column=1)
 
-			entryfc2=Entry(frame2,textvariable=fc2)
+			entryfc2=Entry(frame2)
 			entryfc2.grid(row=4,column=2,padx=10,pady=10)
 			entryfc2.config(justify="right")
 		
@@ -153,7 +173,7 @@ def select():
 			labelrp=Label(frame2,text="Rizo en la región de pasa banda:")
 			labelrp.grid(row=5,column=1)
 
-			entryrp=Entry(frame2,textvariable=rp)
+			entryrp=Entry(frame2)
 			entryrp.grid(row=5,column=2,padx=10,pady=10)
 			entryrp.config(justify="right")
 
@@ -165,7 +185,7 @@ def select():
 			labelrs=Label(frame2,text="Rizo en la región de rechazo:")
 			labelrs.grid(row=6,column=1)
 
-			entryrs=Entry(frame2,textvariable=rs)
+			entryrs=Entry(frame2)
 			entryrs.grid(row=6,column=2,padx=10,pady=10)
 			entryrs.config(justify="right")
 
@@ -177,14 +197,14 @@ def select():
 			labelrp=Label(frame2,text="Rizo en la región de pasa banda:")
 			labelrp.grid(row=5,column=1)
 
-			entryrp=Entry(frame2,textvariable=rp)
+			entryrp=Entry(frame2)
 			entryrp.grid(row=5,column=2,padx=10,pady=10)
 			entryrp.config(justify="right")
 
 			labelrs=Label(frame2,text="Rizo en la región de rechazo:")
 			labelrs.grid(row=6,column=1)
 
-			entryrs=Entry(frame2,textvariable=rs)
+			entryrs=Entry(frame2)
 			entryrs.grid(row=6,column=2,padx=10,pady=10)
 			entryrs.config(justify="right")
 			
