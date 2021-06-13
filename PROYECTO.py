@@ -29,11 +29,26 @@ def select():
 		def limpiar():
 			entryN.delete(0,END)
 			entryfs.delete(0,END)
-			entryfc.delete(0,END)
-			entryfc1.delete(0,END)
-			entryfc2.delete(0,END)
-			entryrp.delete(0,END)
-			entryrs.delete(0,END)
+			try:
+				entryfc.delete(0,END)
+			except:
+				entryfc1.delete(0,END)
+				entryfc2.delete(0,END)
+			try:
+				entryfc1.delete(0,END)
+				entryfc2.delete(0,END)
+			except:
+				entryfc.delete(0,END)
+			try:
+				entryrp.delete(0,END)
+			except:
+				entryN.delete(0,END)
+				entryfs.delete(0,END)
+			try:
+				entryrs.delete(0,END)
+			except:
+				entryN.delete(0,END)
+				entryfs.delete(0,END)
 
 		def evaluar(filtro,tipo):
 			n=int(entryN.get())
