@@ -18,8 +18,21 @@ def select():
 	tipo=menu2.current() #dato actual elegido x2	
 	if filtro>=0 and tipo>=0:
 		ventana2=Tk()
+		
 		frame2=Frame(ventana2)
 		frame2.pack()
+<<<<<<< Updated upstream
+=======
+		
+		n=IntVar()
+		fs=DoubleVar()
+		fc=DoubleVar()
+		fc1=DoubleVar()
+		fc2=DoubleVar()
+		rp=DoubleVar()
+		rs=DoubleVar()
+
+>>>>>>> Stashed changes
 		#////////////FUNCIONES/////////////////////////////
 		#SALIR()///////////////////
 		def salir():
@@ -128,11 +141,11 @@ def select():
 		mostrar=Button(frame2,text="EVALUAR",width=10,command=lambda:evaluar(filtro,tipo)) #esta funcion aun no se crea
 		mostrar.grid(row=7,column=1,padx=10,pady=10)
 		#LIMPIAR ENTRADAS
-		limpiar=Button(frame2,text="BORRAR",width=10,command=limpiar)
-		limpiar.grid(row=7,column=2,padx=10,pady=10)
+		borrar=Button(frame2,text="BORRAR",width=10,command=limpiar)
+		borrar.grid(row=7,column=2,padx=10,pady=10)
 		# SALIR DEL DISEÑO 
-		salir=Button(frame2,text="SALIR",width=10,command=salir)
-		salir.grid(row=7,column=3,padx=10,pady=10)
+		exit=Button(frame2,text="SALIR",width=10,command=salir)
+		exit.grid(row=7,column=3,padx=10,pady=10)
 	#////////////////////////////////////////////////////////
 
 		#Orden y frecuencia de muestreo (Todos la necesitan)
@@ -228,6 +241,9 @@ def select():
 	else:
 		messagebox.showerror(message="Debes seleccionar un filtro y un tipo",title="Error")
 
+def out():
+	ventana.destroy()
+
 label1=Label(frame,text="Filtro:")
 label1.grid(row=1,column=1)
 
@@ -247,5 +263,7 @@ menu2["values"]=opciones2
 botonselect=Button(frame,text="Seleccionar",width=10,command=select)
 botonselect.grid(row=3,column=2,padx=10,pady=10)
 
+botonsalir=Button(frame,text="Salir",width=10,command=out)
+botonsalir.grid(row=3,column=1,padx=10,pady=10)
 
 ventana.mainloop()
