@@ -252,6 +252,6 @@ botonselect=Button(frame,text="Seleccionar",width=10,command=select)
 botonselect.grid(row=3,column=2,padx=10,pady=10)
 
 out2=Button(frame,text="Salir",width=10,command=salir2)
-out2.grid(row=3,column=2,padx=10,pady=10)
+out2.grid(row=3,column=1,padx=10,pady=10)
 
 ventana.mainloop()
