@@ -21,13 +21,14 @@ def select():
 		frame2=Frame(ventana2)
 		frame2.pack()
 
-		N=IntVar()
+		n=IntVar()
 		fs=DoubleVar()
 		fc=DoubleVar()
 		fc1=DoubleVar()
 		fc2=DoubleVar()
 		rp=DoubleVar()
 		rs=DoubleVar()
+		n.set(5)
 
 		#////////////FUNCIONES/////////////////////////////
 		#SALIR()///////////////////
@@ -44,14 +45,14 @@ def select():
 			entryrp.delete(0,END)
 			entryrs.delete(0,END)
 
-		def evaluar(filtro,tipo):
+		def evaluar(filtro,tipo):			
 			Fs=fs.get()/2
 
 			if tipo==0:
 				btype="lowpass"
 				w=fc.get()/Fs
 			elif tipo==1:
-				btype=="highpass"
+				btype="highpass"
 				w=fc.get()/Fs
 			elif tipo==2:
 				btype="bandpass"
@@ -61,19 +62,19 @@ def select():
 				w=[fc1.get()/Fs,fc2.get()/Fs]
 			
 			if filtro==0:
-				b,a=signal.butter(N.get(),w,btype)
+				b,a=signal.butter(n.get(),w,btype)
 				w,h=signal.freqz(b,a)
 				plt.title('Butterworth filter frequency response')
 			elif filtro==1:
-				b,a=signal.butter(N.get(),rp.get(),w,btype)
+				b,a=signal.butter(n.get(),rp.get(),w,btype)
 				w,h=signal.freqz(b,a)
 				plt.title('Chevyshev I filter frequency response')
 			elif filtro==2:
-				b,a=signal.butter(N.get(),rs.get(),w,btype)
+				b,a=signal.butter(n.get(),rs.get(),w,btype)
 				w,h=signal.freqz(b,a)
 				plt.title('Chevyshev II filter frequency response')
 			elif filtro==3:
-				b,a=signal.butter(N.get(),rp.get(),rs.get(),w,btype)
+				b,a=signal.butter(n.get(),rp.get(),rs.get(),w,btype)
 				w,h=signal.freqz(b,a)
 				plt.title('Elliptic filter frequency response')
 
@@ -88,8 +89,8 @@ def select():
 		#/////////////////////////////////////////
 		#BOTONES VENTANA 2 
 		#MOSTRAR RESPUESTA 
-		evaluar=Button(frame2,text="EVALUAR",width=10,command=lambda:evaluar(filtro,tipo)) #esta funcion aun no se crea
-		evaluar.grid(row=7,column=1,padx=10,pady=10)
+		mostrar=Button(frame2,text="EVALUAR",width=10,command=lambda:evaluar(filtro,tipo)) #esta funcion aun no se crea
+		mostrar.grid(row=7,column=1,padx=10,pady=10)
 		#LIMPIAR ENTRADAS
 		limpiar=Button(frame2,text="BORRAR",width=10,command=limpiar)
 		limpiar.grid(row=7,column=2,padx=10,pady=10)
@@ -103,7 +104,7 @@ def select():
 		labelN=Label(frame2,text="Orden del filtro:")
 		labelN.grid(row=1,column=1)
 
-		entryN=Entry(frame2,textvariable=N)
+		entryN=Entry(frame2,textvariable=n)
 		entryN.grid(row=1,column=2,padx=10,pady=10) #entry
 		entryN.config(justify="right")
 
