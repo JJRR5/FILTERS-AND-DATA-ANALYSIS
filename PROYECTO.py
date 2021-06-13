@@ -29,6 +29,7 @@ def select():
 		def limpiar():
 			entryN.delete(0,END)
 			entryfs.delete(0,END)
+			
 			try:
 				entryfc.delete(0,END)
 			except:
