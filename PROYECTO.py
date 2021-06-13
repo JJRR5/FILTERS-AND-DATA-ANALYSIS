@@ -23,7 +23,6 @@ def select():
 		#////////////FUNCIONES/////////////////////////////
 		#SALIR()///////////////////
 		def salir1():
-			ventana.destroy()
 			ventana2.destroy()
 		#LIMPIAR()//////////////////
 		def limpiar():
@@ -73,7 +72,7 @@ def select():
 				elif filtro ==  2 and (tipo==2 or tipo ==3):
 					fc1=float(entryfc1.get())
 					fc2=float(entryfc2.get())
-					rs=float(entryrp.get())
+					rs=float(entryrs.get())
 				elif filtro == 3 and (tipo ==0 or tipo == 1): 
 					fc=float(entryfc.get())
 					rp=float(entryrp.get())
