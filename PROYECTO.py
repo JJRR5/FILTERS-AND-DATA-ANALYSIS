@@ -20,6 +20,15 @@ def select():
 		ventana2=Tk()
 		frame2=Frame(ventana2)
 		frame2.pack()
+
+		N=IntVar()
+		fs=DoubleVar()
+		fc=DoubleVar()
+		fc1=DoubleVar()
+		fc2=DoubleVar()
+		rp=DoubleVar()
+		rs=DoubleVar()
+
 		#////////////FUNCIONES/////////////////////////////
 		#SALIR()///////////////////
 		def salir():
@@ -34,36 +43,60 @@ def select():
 			entryfc2.delete(0,END)
 			entryrp.delete(0,END)
 			entryrs.delete(0,END)
-		#EVALUAR()////////////////
-		
-		#logica para titulo de ventana2/////////
-		if filtro == 0:
-			ventana2.title("Filtro Butterworth")
-		elif filtro ==1:
-			ventana2.title("Filtro Chevyshev Tipo I")
-		elif filtro ==2:
-			ventana2.title("Filtro Chevyshev Tipo II")
-		elif filtro == 3:
-			ventana2.title("Filtro Elíptico")
+
+		def evaluar(filtro,tipo):
+			Fs=fs.get()/2
+
+			if tipo==0:
+				btype="lowpass"
+				w=fc.get()/Fs
+			elif tipo==1:
+				btype=="highpass"
+				w=fc.get()/Fs
+			elif tipo==2:
+				btype="bandpass"
+				w=[fc1.get()/Fs,fc2.get()/Fs]
+			elif tipo==3:
+				btype="bandstop"
+				w=[fc1.get()/Fs,fc2.get()/Fs]
+			
+			if filtro==0:
+				b,a=signal.butter(N.get(),w,btype)
+				w,h=signal.freqz(b,a)
+				plt.title('Butterworth filter frequency response')
+			elif filtro==1:
+				b,a=signal.butter(N.get(),rp.get(),w,btype)
+				w,h=signal.freqz(b,a)
+				plt.title('Chevyshev I filter frequency response')
+			elif filtro==2:
+				b,a=signal.butter(N.get(),rs.get(),w,btype)
+				w,h=signal.freqz(b,a)
+				plt.title('Chevyshev II filter frequency response')
+			elif filtro==3:
+				b,a=signal.butter(N.get(),rp.get(),rs.get(),w,btype)
+				w,h=signal.freqz(b,a)
+				plt.title('Elliptic filter frequency response')
+
+			plt.semilogx(w,20*np.log10(abs(h)))
+			plt.xlabel('Frequency [radians/second]')
+			plt.ylabel('Amplitude [dB]')
+			plt.margins(0,0.1)
+			plt.grid(which='both',axis='both')
+			plt.axvline(100,color='green')
+			plt.show()
+			
 		#/////////////////////////////////////////
 		#BOTONES VENTANA 2 
 		#MOSTRAR RESPUESTA 
-		mostrar=Button(frame2,text="EAVALUAR",width=10,command=select) #esta funcion aun no se crea
-		mostrar.grid(row=7,column=1,padx=10,pady=10)
+		evaluar=Button(frame2,text="EVALUAR",width=10,command=lambda:evaluar(filtro,tipo)) #esta funcion aun no se crea
+		evaluar.grid(row=7,column=1,padx=10,pady=10)
 		#LIMPIAR ENTRADAS
-		limpiar=Button(frame2,text="BORRAR",width=10,command=limpiar) #esta funcion aun no se crea
+		limpiar=Button(frame2,text="BORRAR",width=10,command=limpiar)
 		limpiar.grid(row=7,column=2,padx=10,pady=10)
 		# SALIR DEL DISEÑO 
 		salir=Button(frame2,text="SALIR",width=10,command=salir)
 		salir.grid(row=7,column=3,padx=10,pady=10)
 	#////////////////////////////////////////////////////////
-		N=IntVar()
-		fs=DoubleVar()
-		fc=DoubleVar()
-		fc1=DoubleVar()
-		fc2=DoubleVar()
-		rp=DoubleVar()
-		rs=DoubleVar()
 
 		#Orden y frecuencia de muestreo (Todos la necesitan)
 		
@@ -108,9 +141,14 @@ def select():
 			entryfc2.grid(row=4,column=2,padx=10,pady=10)
 			entryfc2.config(justify="right")
 		
+		if filtro == 0:
+			ventana2.title("Filtro Butterworth")
+
 		#Filtro cheby1
 
-		if filtro==1:
+		elif filtro==1:
+			ventana2.title("Filtro Chevyshev Tipo I")
+
 			labelrp=Label(frame2,text="Rizo en la región de pasa banda:")
 			labelrp.grid(row=5,column=1)
 
@@ -121,6 +159,8 @@ def select():
 		#Filtro cheby2
 
 		elif filtro==2:
+			ventana2.title("Filtro Chevyshev Tipo II")
+
 			labelrs=Label(frame2,text="Rizo en la región de rechazo:")
 			labelrs.grid(row=6,column=1)
 
@@ -131,6 +171,8 @@ def select():
 		#Filtro ellip
 
 		elif filtro==3:
+			ventana2.title("Filtro Elíptico")
+
 			labelrp=Label(frame2,text="Rizo en la región de pasa banda:")
 			labelrp.grid(row=5,column=1)
 
