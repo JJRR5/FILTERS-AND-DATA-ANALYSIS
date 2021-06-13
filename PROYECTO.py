@@ -22,7 +22,7 @@ def select():
 		frame2.pack()
 		#////////////FUNCIONES/////////////////////////////
 		#SALIR()///////////////////
-		def salir():
+		def salir1():
 			ventana.destroy()
 			ventana2.destroy()
 		#LIMPIAR()//////////////////
@@ -51,87 +51,89 @@ def select():
 				entryfs.delete(0,END)
 
 		def evaluar(filtro,tipo):
-			n=int(entryN.get())
-			fs=int(entryfs.get())
-			#Logica para las variables 
-			if filtro == 0 and tipo ==0 or tipo == 1: 
-				fc=int(entryfc.get())
-			elif filtro == 0 and tipo ==2 or tipo ==3: 
-				fc1=int(entryfc1.get())
-				fc2=int(entryfc2.get())
-			elif filtro ==  1 and tipo==2 or tipo ==3:
-				fc1=int(entryfc1.get())
-				fc2=int(entryfc2.get())
-				rp=int(entryrp.get())
-			elif filtro == 1 and tipo ==0 or tipo ==1: 
-				fc=int(entryfc.get())
-				rp=int(entryrp.get())
-			elif filtro == 2 and tipo ==0 or tipo == 1: 
-				fc=int(entryfc.get())
-				rs=int(entryrs.get())
-			elif filtro ==  2 and tipo==2 or tipo ==3:
-				fc1=int(entryfc1.get())
-				fc2=int(entryfc2.get())
-				rs=int(entryrp.get())
-			elif filtro == 3 and tipo ==0 or tipo == 1: 
-				fc=int(entryfc.get())
-				rp=int(entryrp.get())
-				rs=int(entryrp.get())
-			elif filtro == 3 and tipo ==2 or tipo == 3: 
-				fc1=int(entryfc1.get())
-				fc2=int(entryfc2.get())
-				rp=int(entryrp.get())
-				rs=int(entryrp.get())
-			Fs=fs/2
-			if tipo==0:
-				btype="lowpass"
-				w=fc/Fs
-			elif tipo==1:
-				btype="highpass"
-				w=fc/Fs
-			elif tipo==2:
-				btype="bandpass"
-				w=[fc1/Fs,fc2/Fs]
-			elif tipo==3:
-				btype="bandstop"
-				w=[fc1/Fs,fc2/Fs]
-			
-			if filtro==0:
-				b,a=signal.butter(n,w,btype)
-				w,h=signal.freqz(b,a)
-				plt.title('Butterworth filter frequency response')
-			elif filtro==1:
-				b,a=signal.butter(n,rp,w,btype)
-				w,h=signal.freqz(b,a)
-				plt.title('Chevyshev I filter frequency response')
-			elif filtro==2:
-				b,a=signal.butter(n,rs,w,btype)
-				w,h=signal.freqz(b,a)
-				plt.title('Chevyshev II filter frequency response')
-			elif filtro==3:
-				b,a=signal.butter(n,rp,rs,w,btype)
-				w,h=signal.freqz(b,a)
-				plt.title('Elliptic filter frequency response')
+			try:
+				n=int(entryN.get())
+				fs=float(entryfs.get())
+				#Logica para las variables
+				if filtro == 0 and (tipo ==0 or tipo == 1): 
+					fc=float(entryfc.get())
+				elif filtro == 0 and (tipo ==2 or tipo ==3): 
+					fc1=float(entryfc1.get())
+					fc2=float(entryfc2.get())
+				elif filtro ==  1 and (tipo==2 or tipo ==3):
+					fc1=float(entryfc1.get())
+					fc2=float(entryfc2.get())
+					rp=float(entryrp.get())
+				elif filtro == 1 and (tipo ==0 or tipo ==1): 
+					fc=float(entryfc.get())
+					rp=float(entryrp.get())
+				elif filtro == 2 and (tipo ==0 or tipo == 1): 
+					fc=float(entryfc.get())
+					rs=float(entryrs.get())
+				elif filtro ==  2 and (tipo==2 or tipo ==3):
+					fc1=float(entryfc1.get())
+					fc2=float(entryfc2.get())
+					rs=float(entryrp.get())
+				elif filtro == 3 and (tipo ==0 or tipo == 1): 
+					fc=float(entryfc.get())
+					rp=float(entryrp.get())
+					rs=float(entryrp.get())
+				elif filtro == 3 and (tipo ==2 or tipo == 3): 
+					fc1=float(entryfc1.get())
+					fc2=float(entryfc2.get())
+					rp=float(entryrp.get())
+					rs=float(entryrp.get())
+				Fs=fs/2
+				if tipo==0:
+					btype="lowpass"
+					w=fc/Fs
+				elif tipo==1:
+					btype="highpass"
+					w=fc/Fs
+				elif tipo==2:
+					btype="bandpass"
+					w=[fc1/Fs,fc2/Fs]
+				elif tipo==3:
+					btype="bandstop"
+					w=[fc1/Fs,fc2/Fs]
+				
+				if filtro==0:
+					b,a=signal.butter(n,w,btype)
+					w,h=signal.freqz(b,a)
+					plt.title('Butterworth filter frequency response')
+				elif filtro==1:
+					b,a=signal.cheby1(n,rp,w,btype)
+					w,h=signal.freqz(b,a)
+					plt.title('Chebyshev I filter frequency response')
+				elif filtro==2:
+					b,a=signal.cheby2(n,rs,w,btype)
+					w,h=signal.freqz(b,a)
+					plt.title('Chebyshev II filter frequency response')
+				elif filtro==3:
+					b,a=signal.ellip(n,rp,rs,w,btype)
+					w,h=signal.freqz(b,a)
+					plt.title('Elliptic filter frequency response')
 
-			plt.semilogx(w,20*np.log10(abs(h)))
-			plt.xlabel('Frequency [radians/second]')
-			plt.ylabel('Amplitude [dB]')
-			plt.margins(0,0.1)
-			plt.grid(which='both',axis='both')
-			plt.axvline(100,color='green')
-			plt.show()
-			
+				plt.semilogx(w,20*np.log10(abs(h)))
+				plt.xlabel('Frequency [radians/second]')
+				plt.ylabel('Amplitude [dB]')
+				plt.margins(0,0.1)
+				plt.grid(which='both',axis='both')
+				plt.axvline(100,color='green')
+				plt.show()
+			except:
+				messagebox.showerror(message="Favor de veificar los datos",title="Error")
 		#/////////////////////////////////////////
 		#BOTONES VENTANA 2 
 		#MOSTRAR RESPUESTA 
-		mostrar=Button(frame2,text="EVALUAR",width=10,command=lambda:evaluar(filtro,tipo)) #esta funcion aun no se crea
+		mostrar=Button(frame2,text="EVALUAR",width=10,command=lambda:evaluar(filtro,tipo))
 		mostrar.grid(row=7,column=1,padx=10,pady=10)
 		#LIMPIAR ENTRADAS
-		limpiar=Button(frame2,text="BORRAR",width=10,command=limpiar)
-		limpiar.grid(row=7,column=2,padx=10,pady=10)
+		borrar=Button(frame2,text="BORRAR",width=10,command=limpiar)
+		borrar.grid(row=7,column=2,padx=10,pady=10)
 		# SALIR DEL DISEÑO 
-		salir=Button(frame2,text="SALIR",width=10,command=salir)
-		salir.grid(row=7,column=3,padx=10,pady=10)
+		out1=Button(frame2,text="SALIR",width=10,command=salir1)
+		out1.grid(row=7,column=3,padx=10,pady=10)
 	#////////////////////////////////////////////////////////
 
 		#Orden y frecuencia de muestreo (Todos la necesitan)
@@ -227,12 +229,15 @@ def select():
 	else:
 		messagebox.showerror(message="Debes seleccionar un filtro y un tipo",title="Error")
 
+def salir2():
+	ventana.destroy()
+
 label1=Label(frame,text="Filtro:")
 label1.grid(row=1,column=1)
 
 menu1=ttk.Combobox(frame)
 menu1.grid(row=1,column=2)
-opciones1=["Butterworth","Chevyshev tipo I","Chevyshev tipo II","Elíptico"]
+opciones1=["Butterworth","Chebyshev tipo I","Chebyshev tipo II","Elíptico"]
 menu1["values"]=opciones1
 
 label2=Label(frame,text="Tipo:")
@@ -246,5 +251,7 @@ menu2["values"]=opciones2
 botonselect=Button(frame,text="Seleccionar",width=10,command=select)
 botonselect.grid(row=3,column=2,padx=10,pady=10)
 
+out2=Button(frame,text="Salir",width=10,command=salir2)
+out2.grid(row=3,column=2,padx=10,pady=10)
 
 ventana.mainloop()
